@@ -1,0 +1,10 @@
+{
+  "locations": [
+    "Kolonaki"
+  ],
+  "listing_type": "sale",
+  "category": "residential",
+  "property_types": "apartment",
+  "price_max": 300000,
+  "max_depth": 10
+}
