@@ -1,23 +1,21 @@
 # Spitogatos.gr Scraper: Greece Real Estate Listings, Prices, GPS & Agent Phone Numbers
 
 [![Run on Apify](https://img.shields.io/badge/Apify-Run%20the%20Actor-00A67E?logo=apify&logoColor=white)](https://apify.com/fayoussef/spitogatos-scraper?fpr=youssef)
-![Phone on every listing](https://img.shields.io/badge/Agent%20phone-every%20listing-2ea44f)
-![No API key](https://img.shields.io/badge/Spitogatos%20API%20key-not%20needed-1C7ED6)
-![English and Greek](https://img.shields.io/badge/Language-English%20%7C%20Greek-8B5CF6)
+![Agent phone](https://img.shields.io/badge/Agent%20phone-every%20listing-2ea44f)
+![Spitogatos API key](https://img.shields.io/badge/Spitogatos%20API%20key-not%20needed-1C7ED6)
+![Language](https://img.shields.io/badge/Language-English%20%7C%20Greek-8B5CF6)
 ![Export](https://img.shields.io/badge/Export-JSON%20%7C%20CSV%20%7C%20Excel-F59E0B)
 
 > ### ▶️ [Run the Spitogatos.gr Scraper on Apify](https://apify.com/fayoussef/spitogatos-scraper?fpr=youssef)
 > Scrape Greek property listings from Spitogatos.gr (apartments, houses, studios, land and commercial property, for sale or for rent) with price, price per m², GPS coordinates, photos and a **phone number for the agent or agency on every listing**. Search by place name, no URL and no Spitogatos API key needed.
 
-**Spitogatos.gr Scraper** is a cloud scraper for **Spitogatos**, the largest real estate portal in Greece. It turns any Spitogatos search into a clean dataset, one row per property, ready for Excel, Google Sheets, a database or your own code. This repository documents the [Spitogatos.gr Scraper Apify Actor](https://apify.com/fayoussef/spitogatos-scraper?fpr=youssef): what it does, the input it takes, the data it returns, and working Python, JavaScript and cURL examples for calling it through the API.
+**Spitogatos.gr Scraper** is a cloud scraper for **Spitogatos**, the largest real estate portal in Greece. It turns any Spitogatos search into a clean dataset, one row per property, ready for Excel, Google Sheets, a database or your own code. This repository documents the Spitogatos.gr Scraper Apify Actor: what it does, the input it takes, the data it returns, and working Python, JavaScript and cURL examples for calling it through the API.
 
 - **Run it in the browser:** [fayoussef/spitogatos-scraper on Apify](https://apify.com/fayoussef/spitogatos-scraper?fpr=youssef)
 - **Guide and docs:** [automationbyexperts.com/apify/spitogatos-scraper](https://automationbyexperts.com/apify/spitogatos-scraper)
 - **Actor ID for the API:** `fayoussef/spitogatos-scraper`
 
 ## What the Spitogatos scraper does
-
-Search Spitogatos.gr the same way you would on the site, then download every result as structured data:
 
 - **Sale and rental listings** across **Athens, Thessaloniki, Piraeus, Glyfada, Kifisia, Marousi, Kolonaki, Chania, Heraklion, Patras** and the rest of Greece.
 - **Every property type**: apartments, studios, maisonettes, detached houses, villas, lofts, buildings, land plots, commercial space, new developments and student housing.
@@ -51,28 +49,48 @@ Each property is one row with 60+ fields. The main ones:
 | `description` | Full listing text |
 | Amenities | Parking, storage, elevator, A/C, heating type, garden and more |
 
+## Input
+
+There are two ways to tell the scraper what to collect: search by filters, or paste Spitogatos.gr URLs into `start_urls` (search, listing or agent pages, English or Greek). Start URLs win when both are given, and `max_depth` sets how many result pages to scrape.
+
+| Field | What it does |
+|---|---|
+| `locations` | Place names in English or Greek, e.g. `["Kolonaki", "Glyfada"]`. Partial names work |
+| `listing_type` | `sale` or `rent` |
+| `category` | `residential`, `commercial`, `land`, `other`, `new_development`, `student_housing` |
+| `property_types` | `apartment`, `studio`, `maisonette`, `detached`, `villa`, `loft`, `building` and more |
+| `price_min` / `price_max` | Price range in EUR |
+| `area_min` / `area_max` | Floor area in m² |
+| `rooms_min` / `rooms_max` | Number of rooms |
+| `construction_year_min` / `construction_year_max` | Year built |
+| `floor_min` / `floor_max` | Floor, from basement up |
+| `energy_class` | `a` to `g` |
+| `heating_controllers` / `heating_media` | Heating type |
+| `amenities` | Features such as parking, storage, elevator, garden |
+| `posted_within` / `updated_within` | Only listings posted or updated in the last 24 hours, 3 days, week, month... |
+| `sort_by` / `sort_order` | Sort by relevance or price |
+
 ## Use cases
 
 - **Greek property market research**: compare sale and rent prices and €/m² by neighbourhood across Athens, Thessaloniki and the islands.
 - **Rental yield and investment analysis**: pull sale and rent listings for the same area and estimate gross yields.
 - **Real estate lead generation**: build a list of active agencies and agents, with phone numbers, in a target area.
-- **Price drop and new listing alerts**: schedule a daily run with `posted_within: "24hours"` and catch new listings first.
+- **New listing alerts**: schedule a daily run with `posted_within: "24hours"` and catch new listings first.
 - **Maps and geo analysis**: plot every listing with its GPS coordinates.
 - **Relocation, students and expats**: export every rental under your budget in one sheet instead of paging through the site.
 
 Ready-made examples you can run in one click:
 
-- [Find apartments for sale in Kolonaki, Athens](https://apify.com/fayoussef/spitogatos-scraper/examples/kolonaki-apartments-for-sale?fpr=youssef): apartments for sale in Kolonaki up to 300,000 EUR with price, €/m², floor, year, energy class, GPS and the agent's phone number.
-- [Find apartments for rent in Thessaloniki under 600 EUR](https://apify.com/fayoussef/spitogatos-scraper/examples/thessaloniki-apartments-for-rent-under-600?fpr=youssef): every apartment for rent in Thessaloniki at 600 EUR a month or less, with floor area, heating, furnished flag and the landlord or agency phone.
-- [Export land plots for sale in Chania, Crete](https://apify.com/fayoussef/spitogatos-scraper/examples/crete-land-plots-for-sale?fpr=youssef): plots of land for sale around Chania with price, area, €/m², coordinates and the seller's phone number.
-- [Διαμερίσματα για ενοικίαση στο κέντρο της Αθήνας έως 800€](https://apify.com/fayoussef/spitogatos-scraper/examples/athens-center-apartments-for-rent-greek?fpr=youssef): αγγελίες ενοικίασης στο κέντρο της Αθήνας με τιμή, τετραγωνικά, όροφο, ενεργειακή κλάση, GPS και τηλέφωνο μεσίτη.
-- [Κατοικίες προς πώληση στη Θεσσαλονίκη από το Spitogatos](https://apify.com/fayoussef/spitogatos-scraper/examples/thessaloniki-homes-for-sale-greek?fpr=youssef): διαμερίσματα, μονοκατοικίες και μεζονέτες προς πώληση στη Θεσσαλονίκη με τιμή, τετραγωνικά και τηλέφωνο μεσίτη.
+- [Find apartments for sale in Kolonaki, Athens](https://apify.com/fayoussef/spitogatos-scraper/examples/kolonaki-apartments-for-sale?fpr=youssef): Searches Spitogatos.gr for apartments for sale in Kolonaki up to 300,000 EUR and returns 25 plus fields per property: price, price per square metre, floor, year, energy class, GPS coordinates, owner or agent phone number and full resolution photos. No URL to copy, just the place name.
+- [Find apartments for rent in Thessaloniki under 600 EUR](https://apify.com/fayoussef/spitogatos-scraper/examples/thessaloniki-apartments-for-rent-under-600?fpr=youssef): Pulls every apartment for rent in Thessaloniki at 600 EUR a month or less from Spitogatos.gr, with floor area, floor, heating, furnished flag, the landlord or agency phone number and the listing's coordinates. Students, relocating workers and agencies get the whole market in one sheet.
+- [Διαμερίσματα για ενοικίαση στο κέντρο της Αθήνας έως 800€](https://apify.com/fayoussef/spitogatos-scraper/examples/athens-center-apartments-for-rent-greek?fpr=youssef): Συλλέγει από το Spitogatos.gr αγγελίες διαμερισμάτων προς ενοικίαση στο κέντρο της Αθήνας με ενοίκιο έως 800€ και επιστρέφει πάνω από 25 πεδία ανά ακίνητο: τιμή, τετραγωνικά, όροφο, έτος κατασκευής, ενεργειακή κλάση, συντεταγμένες GPS, τηλέφωνο μεσίτη ή ιδιοκτήτη και φωτογραφίες σε υψηλή ανάλυση.
+- [Κατοικίες προς πώληση στη Θεσσαλονίκη από το Spitogatos](https://apify.com/fayoussef/spitogatos-scraper/examples/thessaloniki-homes-for-sale-greek?fpr=youssef): Συλλέγει τις αγγελίες κατοικιών προς πώληση στη Θεσσαλονίκη από το Spitogatos.gr (διαμερίσματα, μονοκατοικίες, μεζονέτες) με τιμή, τετραγωνικά, όροφο, έτος κατασκευής, ενεργειακή κλάση, συντεταγμένες GPS, τηλέφωνο μεσίτη και φωτογραφίες. Ιδανικό για ανάλυση τιμών ακινήτων και εντοπισμό ευκαιριών.
 
 ## Quick start
 
 ### 1. In the browser (no code)
 
-1. Open the [Spitogatos.gr Scraper on Apify](https://apify.com/fayoussef/spitogatos-scraper?fpr=youssef) and click **Try for free**.
+1. Open the Actor on Apify and click **Try for free**.
 2. Type a place name in **Locations** (for example `Glyfada`), pick **Sale or rent**, a property type and a price range. Or paste a Spitogatos.gr search URL into **Start URLs**.
 3. Click **Start**, then download the results as Excel, CSV or JSON from the **Output** tab.
 
@@ -141,33 +159,6 @@ curl -X POST "https://api.apify.com/v2/acts/fayoussef~spitogatos-scraper/run-syn
 ```
 
 Synchronous calls time out after 300 seconds. For larger runs use the client libraries above, or start the run with `POST /v2/acts/fayoussef~spitogatos-scraper/runs` and read the dataset when it finishes.
-
-## Input
-
-There are two ways to tell the scraper what to collect. Start URLs win when both are given.
-
-**1. Search by filters (no URL needed)**
-
-| Field | What it does |
-|---|---|
-| `locations` | Place names in English or Greek, e.g. `["Kolonaki", "Glyfada"]`. Partial names work |
-| `listing_type` | `sale` or `rent` |
-| `category` | `residential`, `commercial`, `land`, `other`, `new_development`, `student_housing` |
-| `property_types` | `apartment`, `studio`, `maisonette`, `detached`, `villa`, `loft`, `building` and more |
-| `price_min` / `price_max` | Price range in EUR |
-| `area_min` / `area_max` | Floor area in m² |
-| `rooms_min` / `rooms_max` | Number of rooms |
-| `construction_year_min` / `construction_year_max` | Year built |
-| `floor_min` / `floor_max` | Floor, from basement up |
-| `energy_class` | `a` to `g` |
-| `heating_controllers` / `heating_media` | Heating type |
-| `amenities` | Features such as parking, storage, elevator, garden |
-| `posted_within` / `updated_within` | Only listings posted or updated in the last 24 hours, 3 days, week, month... |
-| `sort_by` / `sort_order` | Sort by relevance or price |
-
-**2. Start URLs**
-
-`start_urls` takes any Spitogatos.gr search results page, listing page or agent page, in English (`/en/`) or Greek. `max_depth` sets how many result pages to scrape.
 
 ## Sample output
 
@@ -264,11 +255,12 @@ Pay per use on Apify: you are charged per event (results produced), with no subs
 
 - [Spitogatos Cyprus Scraper (spitogatos.com.cy)](https://apify.com/fayoussef/spitogatos-cy-scraper?fpr=youssef)
 - [XE.gr Greek Property Scraper](https://apify.com/fayoussef/xe-gr-scraper?fpr=youssef)
-- [AutoScout24 All-Country Scraper](https://github.com/automationbyexperts/autoscout24-scraper)
-- [wallapop Scraper (Spain, Italy, Portugal)](https://github.com/automationbyexperts/wallapop-scraper)
-- [Kijiji Scraper](https://github.com/automationbyexperts/kijiji-scraper)
-- [Canada411 Scraper: Business Phones, Addresses](https://github.com/automationbyexperts/canada411-scraper)
-- [Bulk LLM Runner GPT, Claude, Perplexity, Kimi (No API Key)](https://github.com/automationbyexperts/bulk-llm-runner)
+- [Bulk AI Image Generator: Nano Banana & GPT Image](https://github.com/automationbyexperts/bulk-ai-image-generator)
+- [Bulk LLM Runner: ChatGPT, Claude & Gemini in Bulk](https://github.com/automationbyexperts/bulk-llm-runner)
+- [AutoTrader.ca Scraper: Canada Car Listings, VIN & Dealers](https://github.com/automationbyexperts/autotrader-canada-scraper)
+- [Canada411 Scraper: Phone Numbers & Addresses](https://github.com/automationbyexperts/canada411-scraper)
+- [Wallapop Scraper: Spain, France, Italy, Portugal & UK](https://github.com/automationbyexperts/wallapop-scraper)
+- [AutoScout24 Scraper: European Car Listings & Dealer Phones](https://github.com/automationbyexperts/autoscout24-scraper)
 - [Full catalog of our web scraping APIs](https://github.com/automationbyexperts/web-scraping-apis)
 
 ## Support
